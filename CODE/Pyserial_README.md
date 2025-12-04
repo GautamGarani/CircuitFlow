@@ -1,4 +1,4 @@
-<p align="center"><img src="../Images/circuitflow_logo.png" alt="CircuitFlow Logo" width="200" height="200">
+<p align="center"><img src="../Images/circuitflow_logo.png" alt="CircuitFlow Logo" width="200" height="300">
 </p>
 
 # Pyserial:
