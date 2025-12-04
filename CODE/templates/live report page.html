@@ -11,18 +11,24 @@
     body {
         margin: 0;
         padding: 0;
-        background: linear-gradient(to bottom, #cce7ff, #e8f6ff);
+        background: white;
         font-family: Arial, sans-serif;
     }
 
     .header {
-        background: #0a75c2;
-        padding: 18px;
+        position: sticky;
+        display: grid;
+        place-items: center;
         text-align: center;
-        color: white;
-        font-size: 24px;
+        top: 0;
+        padding: 12 16;
+        background: #12a1de;
+        color: black;
+        font: 18 Arial, sans-serif;
         font-weight: bold;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        color: #f5f5f5;
+        z-index: 1000;
     }
 
     /* 2-column layout */
@@ -56,7 +62,7 @@
     }
 
     .block-small:hover {
-        transform: scale(1.02);
+        transform: scale(1.05);
     }
 
     /* Graph block */
@@ -75,21 +81,26 @@
         font-size: 18px;
     }
 
-    .back-btn-box {
+    button{
+        margin-top: 15px;
+        width: 100%;
         padding: 12px;
-        background: #0a75c2;
+        background: #12a1de;
         color: white;
-        border-radius: 8px;
+        border-radius: 5px;
+        border: none;
         font-size: 16px;
         cursor: pointer;
-        transition: 0.3s;
-        margin-top: 10px;
-        text-decoration: none;
+        font-weight: 80px;
         display: inline-block;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2.5s infinite;
     }
 
-    .back-btn-box:hover {
-        background: #004e8a;
+    @keyframes shimmer{
+        100%{
+            mask-position: left;
+        }
     }
 
     canvas {
@@ -97,12 +108,54 @@
         height: 95% !important;
     }
 
+   .header-content {
+    	display: flex;
+    	align-items: center;
+    	gap: 10px;  /* spacing between logo and text */
+    }
+
+    .logo {
+    height: 90px;   
+    width: auto;
+    }
+
+     @media (max-width: 768px) {
+
+        .main-grid {
+            grid-template-columns: 1fr;   /* ⭐ 1 column instead of 2 ⭐ */
+            height: auto;                 /* ⭐ Allow natural height on mobile ⭐ */
+            width: 95%;
+        }
+
+        .left-col {
+            height: auto;
+        }
+
+        .block-small {
+            height: auto;                 
+
+        .block-large {
+            height: 380px;                
+        }
+
+        .logo {
+            height: 70px;                
+        }
+
+        h2 {
+            font-size: 20px;             
+        }
+    }
 </style>
 </head>
-
 <body>
 
-<div class="header">CircuitFlow – Live Monitoring</div>
+<div class="header">
+    <div class="header-content">
+        <img class="logo" src="../static/circuitflow_logo.png">
+        <h2>Live Monitoring</h2>       
+    </div>
+</div>
 
 <div class="main-grid">
 
@@ -120,7 +173,8 @@
         <!-- Block 2: BACK BUTTON BLOCK -->
         <div class="block-small">
             <h3>⬅ Back to Main Page</h3>
-            <a href="mainpage.html" class="back-btn-box">Go Back</a>
+            <a href="/">
+                <button>Go Back</button></a>
         </div>
 
     </div>
