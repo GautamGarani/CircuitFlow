@@ -25,7 +25,7 @@ What the parameters mean:<br>
 ## Important Methods:
 ### ser.readline()
 Reads until a newline. This works well with Arduino's ``Serial.println()``
-## in_waiting:
+### in_waiting:
 It specifies the number of bytes waiting to be read
 <br>
 example:
@@ -35,7 +35,7 @@ if serial.in_waiting>0:
     data=ser.readline()
 ```
 
-## Loop for live data:
+### Loop for live data:
 ```bash
 import serial
 import time
