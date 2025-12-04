@@ -53,7 +53,7 @@ while True:
 ```bash
 try:
     ser.readline()
-except serial.SerialException:
+except: serial.SerialException:
     print("Serial Disconnected")
 ```
 Date: 04/12/2025
