@@ -3,11 +3,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def home_page():
-    return render_template("ui_2.html")
+    return render_template("mainpage.html")
 
-'''@app.route("/live")
+@app.route("/live")
 def live_page():
-    return render_template("")'''
+    return render_template("live report page.html")
+
+@app.route("/analysis")
+def analysis_page():
+    return render_template("daily analysis page.html")
 
 
 if __name__ == "__main__":
