@@ -1,4 +1,4 @@
-![CircuitFlow logo](Images/circuitflow_logo.png)
+<img src="../Images/circuitflow_logo.png" alt="CircuitFlow Logo" width="50" height="30">
 
 # Pyserial:
 Pyserial is python's standard library for communicating with serial ports.
