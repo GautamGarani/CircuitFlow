@@ -72,6 +72,7 @@
         padding: 20px;
         box-shadow: 0px 4px 14px rgba(0,0,0,0.18);
         height: 100%;
+
     }
 
     .block-small h3, .block-large h3 {
@@ -148,6 +149,11 @@
         }
     }
     }
+
+    .sp1{
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2s infinite;
+    }
 </style>
 </head>
 <body>
@@ -155,7 +161,7 @@
 <div class="header">
     <div class="header-content">
         <img class="logo" src="../static/circuitflow_logo.png">
-        <h2>Live Monitoring</h2>       
+        <h2><span class="sp1">Live Monitoring</span></h2>       
     </div>
 </div>
 
