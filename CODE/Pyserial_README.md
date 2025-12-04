@@ -26,7 +26,7 @@ What the parameters mean:<br>
 ### ser.readline()
 Reads until a newline. This works well with Arduino's ``Serial.println()``
 ### in_waiting:
-It specifies the number of bytes waiting to be read
+It specifies the number of bytes waiting to be read.
 <br>
 example:
 
