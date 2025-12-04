@@ -106,6 +106,7 @@
     canvas {
         width: 100% !important;
         height: 95% !important;
+        animation: shimmer 2s infinite;
     }
 
    .header-content {
@@ -122,8 +123,8 @@
      @media (max-width: 768px) {
 
         .main-grid {
-            grid-template-columns: 1fr;   /* ⭐ 1 column instead of 2 ⭐ */
-            height: auto;                 /* ⭐ Allow natural height on mobile ⭐ */
+            grid-template-columns: 1fr;   
+            height: auto;                 
             width: 95%;
         }
 
@@ -145,6 +146,7 @@
         h2 {
             font-size: 20px;             
         }
+    }
     }
 </style>
 </head>
