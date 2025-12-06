@@ -42,13 +42,13 @@ void loop()
     {
       digitalWrite(ledPin, HIGH); 
       tone(buzzerPin, 1000);
-      delay(1000);
+      delay(10000);
     }
     else
     {
       digitalWrite(ledPin, LOW);
       noTone(buzzerPin);
-      delay(1000);
+      delay(10000);
     }
 
     Serial.print("Volume: ");
