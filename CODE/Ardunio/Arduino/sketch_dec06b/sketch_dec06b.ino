@@ -32,6 +32,7 @@ void setup()
 
 void loop()
 {
+
   currentTime = millis();
   if (currentTime >= (cloopTime + 1000))
   {
@@ -43,12 +44,12 @@ void loop()
     if (volume> FLOW_THRESHOLD && handdetectedHigh == LOW)
     { 
       tone(buzzerPin, 1000);
-      delay(500);
+      //delay(500);
     }
     else 
     {
       noTone(buzzerPin);
-      delay(500);
+      //delay(500);
     }
     if (handdetectedHigh == LOW)
     {
@@ -66,13 +67,7 @@ void loop()
     {
       digitalWrite(ledPin1, LOW);
     }
-
-    while(true){
-      Serial.println(volume);
-      delay(500);
-    }
-    
-
+  Serial.println(volume);
     pulse = 0; 
   }
 }

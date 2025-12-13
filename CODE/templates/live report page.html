@@ -221,7 +221,7 @@
 
     
     <div class="block-large">
-        <h3>📈 <span class="sp1">Live</span> Flow Graph</h3>
+        <h3>📈 <span class="sp1">Live</span> Flow Graph <span class="sp1">(LPM)</span></h3>
         <canvas id="flowChart"></canvas>
     </div>
 
@@ -257,7 +257,7 @@
                     beginAtZero: true }
             },
             animation: {
-                duration: 12,
+                duration: 1,
             },
     }});
 
@@ -269,19 +269,18 @@
         try {
             //parse the JSON file
             const data = JSON.parse(event.data); 
-            const newFlow = parseFloat(data.value); 
+            const newFlow = Number(data.value); 
             const date = new Date(data.timestamp * 1000); 
             const timeLabel = date.toLocaleTimeString('en-US', { hour12: false });
             document.getElementById("usageValue").textContent = `Flow Rate: ${newFlow.toFixed(2)} L/min`;
             
             // Rectangular integration using time.sleep() from Flask
-            totalUsed += newFlow * (0.01/60); 
+            totalUsed += newFlow * (0.4/60); 
             document.getElementById("totalValue").textContent = `Total Used: ${totalUsed.toFixed(2)} L`;
 
             // Update Valve Status
             document.getElementById("valveStatus").textContent = newFlow > 0 ? "Valve: OPEN" : "Valve: CLOSED";
 
-        
             const chartData = flowChart.data.datasets[0].data;
             const chartLabels = flowChart.data.labels;
             

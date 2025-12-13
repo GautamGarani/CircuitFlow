@@ -1,11 +1,14 @@
 import serial
 import time
 import threading
+import csv
 
 SERIAL_PORT = 'COM4' 
 BAUD_RATE = 9600
 latest_value=0.0
+
 data_lock=threading.Lock()
+
 def read_arduino_data():
     global latest_value
     print(f"Attempting to connect to {SERIAL_PORT} at {BAUD_RATE} baud rate")
@@ -21,15 +24,17 @@ def read_arduino_data():
                 line = ser.readline().decode('utf-8').strip()
                 if line:
                     try:
-                        data_values=line.split(":")[0]
-                        new_value=float(data_values)
+                        #data_values=line.split(":")[0]
+                        new_value=float(line)
                         with data_lock:
                             latest_value=new_value
-                        print(f"Received Sensor Data, and converted to <float>: **{latest_value}**")
+                        print(f"Received Sensor Data, and converted to <float>: {latest_value}")
+                        with open("flow_data.csv", 'a', newline="") as f:
+                            filewriter=csv.writer(f)
+                            filewriter.writerow([latest_value])
                     except ValueError:
                         print(f"Received some data: {line}")
-            
-            time.sleep(0.05) 
+                    time.sleep(1.0)
 
     except serial.SerialException as e:
         print(f"Error details: {e}")
@@ -44,8 +49,7 @@ def read_arduino_data():
                 print("Serial port closed.")
 
 try: 
-    thread=threading.Thread(target=read_arduino_data, daemon=True)
-    thread.start()
+    thread=threading.Thread(target=read_arduino_data, daemon=True).start()
     print("Threader started successfully")
 except:
     print("threading failed to start")

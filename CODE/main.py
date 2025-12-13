@@ -23,9 +23,10 @@ def generate_data():
             'value': current_value, 
             'timestamp': time.time()
         }
-
+        print(f"Flask sending: {data} at {data['timestamp']}")
         yield f"data: {json.dumps(data)}\n\n"
-        time.sleep(0.1)
+        #yield f"data:{json.dumps(data)}\n\n"
+        time.sleep(1.0)
 
 @app.route("/analysis")
 def analysis_page():
