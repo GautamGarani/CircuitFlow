@@ -133,9 +133,9 @@
     }
 
    .header-content {
-    	display: flex;
-    	align-items: center;
-    	gap: 10px;  
+        display: flex;
+        align-items: center;
+        gap: 10px;  
     }
 
     .logo {
@@ -230,6 +230,10 @@
 <script>
     
     const MAX_DATA_POINTS = 20; 
+    
+    //CHANGE: Define the update interval to match the server stream speed (0.4s).
+    const UPDATE_INTERVAL_SECONDS = 0.4; 
+    
     const ctx = document.getElementById('flowChart').getContext('2d');
     const flowChart = new Chart(ctx, {
         type: 'line',
@@ -238,7 +242,10 @@
             datasets: [{
                 label: "Flow (L/min)",
                 data: [],
-                borderColor: "red",
+                
+                //CHANGE: Changed border color to match the header color for better aesthetics
+                borderColor: "#12a1de",
+                
                 backgroundColor: "rgba(10,117,194,0.2)",
                 borderWidth: 2,
                 tension: 0.35,
@@ -256,8 +263,10 @@
                     display: true,
                     beginAtZero: true }
             },
+            //CHANGE: Faster animation to match the faster stream interval
             animation: {
-                duration: 1,
+                duration: 10,
+                easing: 'linear'
             },
     }});
 
@@ -271,15 +280,21 @@
             const data = JSON.parse(event.data); 
             const newFlow = Number(data.value); 
             const date = new Date(data.timestamp * 1000); 
-            const timeLabel = date.toLocaleTimeString('en-US', { hour12: false });
+           
+            const timeLabel = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            
             document.getElementById("usageValue").textContent = `Flow Rate: ${newFlow.toFixed(2)} L/min`;
             
-            // Rectangular integration using time.sleep() from Flask
-            totalUsed += newFlow * (0.4/60); 
+            // Rectangular integration using server's known time difference.
+            // Flow (L/min) * (0.4 seconds / 60 seconds/min)
+            
+            //CHANGE: Updated the time constant to use the new defined constant
+            totalUsed += newFlow * (UPDATE_INTERVAL_SECONDS/60); 
+            
             document.getElementById("totalValue").textContent = `Total Used: ${totalUsed.toFixed(2)} L`;
 
-            // Update Valve Status
-            document.getElementById("valveStatus").textContent = newFlow > 0 ? "Valve: OPEN" : "Valve: CLOSED";
+            // Update Valve Status (using a small threshold > 0.01 to account for sensor noise)
+            document.getElementById("valveStatus").textContent = newFlow > 0.01 ? "Valve: OPEN" : "Valve: CLOSED";
 
             const chartData = flowChart.data.datasets[0].data;
             const chartLabels = flowChart.data.labels;
