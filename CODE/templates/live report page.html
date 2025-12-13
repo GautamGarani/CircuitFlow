@@ -257,10 +257,9 @@
                     beginAtZero: true }
             },
             animation: {
-                duration: 120,
-            }
-        }
-    });
+                duration: 12,
+            },
+    }});
 
     //Initialise the total usage
     let totalUsed = 0.0;
@@ -276,7 +275,7 @@
             document.getElementById("usageValue").textContent = `Flow Rate: ${newFlow.toFixed(2)} L/min`;
             
             // Rectangular integration using time.sleep() from Flask
-            totalUsed += newFlow * (1/60); 
+            totalUsed += newFlow * (0.01/60); 
             document.getElementById("totalValue").textContent = `Total Used: ${totalUsed.toFixed(2)} L`;
 
             // Update Valve Status

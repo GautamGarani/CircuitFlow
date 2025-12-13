@@ -43,12 +43,12 @@ void loop()
     if (volume> FLOW_THRESHOLD && handdetectedHigh == LOW)
     { 
       tone(buzzerPin, 1000);
-      delay(1000);
+      delay(500);
     }
     else 
     {
       noTone(buzzerPin);
-      delay(1000);
+      delay(500);
     }
     if (handdetectedHigh == LOW)
     {
@@ -66,7 +66,12 @@ void loop()
     {
       digitalWrite(ledPin1, LOW);
     }
-    Serial.println(volume);
+
+    while(true){
+      Serial.println(volume);
+      delay(500);
+    }
+    
 
     pulse = 0; 
   }

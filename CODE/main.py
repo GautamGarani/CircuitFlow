@@ -25,7 +25,7 @@ def generate_data():
         }
 
         yield f"data: {json.dumps(data)}\n\n"
-        time.sleep(1.0)
+        time.sleep(0.1)
 
 @app.route("/analysis")
 def analysis_page():
