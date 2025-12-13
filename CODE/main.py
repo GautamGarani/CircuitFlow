@@ -29,12 +29,12 @@ def read_arduino_data():
                 if line:
                     try:
                         new_value = float(line)
-                        calculated_value = new_value + random.randint(1,100)
+                        calculated_value = new_value + 1
                         print(f"Raw data: {line}")
                         with data_lock:
                             latest_value = calculated_value
                         
-                        print(f"Received Sensor Data: {new_value}, and tweaked value: {latest_value}")
+                        print(f"Received Sensor Data: {new_value}, and sent to Flask: {latest_value}")
                         
                         with open("flow_data.csv", 'a', newline="") as f:
                             filewriter = csv.writer(f)
