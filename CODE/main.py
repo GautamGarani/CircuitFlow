@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, render_template, Response
+from flask import Flask, render_template, Response
 import time
 import json
+import random
 #Merged the two programs here --------------
 import serial
 import threading
@@ -27,9 +28,8 @@ def read_arduino_data():
                 line = ser.readline().decode('utf-8').strip()
                 if line:
                     try:
-
                         new_value = float(line)
-                        calculated_value = new_value + 1.00
+                        calculated_value = new_value + random.randint(1,100)
                         
                         with data_lock:
                             latest_value = calculated_value
@@ -72,14 +72,12 @@ def generate_data():
     while True:
         with data_lock:
             current_value = latest_value
-
         data = {
             'value': current_value, 
             'timestamp': time.time()
         }
-        
+        print(f"Sending data from Flask:{data}")
         yield f"data: {json.dumps(data)}\n\n"
-        
         time.sleep(0.4)
 
 @app.route("/stream")
@@ -102,4 +100,4 @@ if __name__ == "__main__":
     thread = threading.Thread(target=read_arduino_data, daemon=True)
     thread.start()
     print("Starting the server...")
-    app.run(host='0.0.0.0', port=8000, debug=True, use_reloader=False) 
+    app.run(host='0.0.0.0', port=8000, debug=False, use_reloader=False) 

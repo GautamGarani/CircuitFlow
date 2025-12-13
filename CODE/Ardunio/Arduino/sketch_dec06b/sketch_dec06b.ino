@@ -37,7 +37,7 @@ void loop()
   if (currentTime >= (cloopTime + 1000))
   {
     cloopTime = currentTime; 
-    volume = 2.633*pulse; 
+    float volume = 2.633*pulse; 
 
     int handdetectedHigh = digitalRead(irSensorPin);
 
