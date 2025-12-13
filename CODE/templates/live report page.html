@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
 <title>CircuitFlow – Live Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -31,7 +32,7 @@
         z-index: 1000;
     }
 
-    /* 2-column layout */
+    
     .main-grid {
         display: grid;
         grid-template-columns: 260px auto;
@@ -65,7 +66,10 @@
         transform: scale(1.05);
     }
 
-    /* Graph block */
+    button:hover{
+        transform: scale(1.2);
+    }
+    
     .block-large {
         background: white;
         border-radius: 12px;
@@ -84,7 +88,7 @@
 
     button{
         margin-top: 15px;
-        width: 100%;
+        width: 50%;
         padding: 12px;
         background: #12a1de;
         color: white;
@@ -96,6 +100,24 @@
         display: inline-block;
         mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
         animation: shimmer 2.5s infinite;
+        transition-duration: 0.5s;
+    }
+
+    .button1{
+        margin-top: 15px;
+        width: 50%;
+        padding: 12px;
+        background: red;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 80px;
+        display: inline-block;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2.5s infinite;
+        transition-duration: 0.5s;
     }
 
     @keyframes shimmer{
@@ -106,14 +128,14 @@
 
     canvas {
         width: 100% !important;
-        height: 95% !important;
+        height: 85% !important;
         animation: shimmer 2s infinite;
     }
 
    .header-content {
     	display: flex;
     	align-items: center;
-    	gap: 10px;  /* spacing between logo and text */
+    	gap: 10px;  
     }
 
     .logo {
@@ -152,8 +174,16 @@
 
     .sp1{
         mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
-        animation: shimmer 2s infinite;
+        animation: shimmer 1.5s infinite;
     }
+    
+    footer{
+    margin-top: -10px;   
+    padding: 10px;
+    font-size: 20px;
+    opacity: 0.7;
+    
+}
 </style>
 </head>
 <body>
@@ -167,36 +197,39 @@
 
 <div class="main-grid">
 
-    <!-- LEFT COLUMN -->
+    
     <div class="left-col">
 
-        <!-- Block 1: LIVE USAGE -->
+        
         <div class="block-small">
-            <h3>🔵 Live Usage</h3>
+            <h3>&#128308; <span class="sp1">Live</span> Usage</h3>
             <p id="usageValue">Flow Rate: 0.0 L/min</p>
             <p id="totalValue">Total Used: 0.0 L</p>
             <p id="valveStatus">Valve: CLOSED</p>
         </div>
 
-        <!-- Block 2: BACK BUTTON BLOCK -->
+        
         <div class="block-small">
             <h3>⬅ Back to Main Page</h3>
             <a href="/">
-                <button>Go Back</button></a>
+                <button>Back</button></a>
+            <a href="/live">
+                <button class="button1">Reload &#10227;</button></a>
         </div>
 
     </div>
 
-    <!-- RIGHT COLUMN (GRAPH) -->
+    
     <div class="block-large">
-        <h3>📈 Live Flow Graph</h3>
+        <h3>📈 <span class="sp1">Live</span> Flow Graph</h3>
         <canvas id="flowChart"></canvas>
     </div>
 
 </div>
 
 <script>
-    // Chart.js live graph
+    
+    const MAX_DATA_POINTS = 20; 
     const ctx = document.getElementById('flowChart').getContext('2d');
     const flowChart = new Chart(ctx, {
         type: 'line',
@@ -205,7 +238,7 @@
             datasets: [{
                 label: "Flow (L/min)",
                 data: [],
-                borderColor: "#0a75c2",
+                borderColor: "red",
                 backgroundColor: "rgba(10,117,194,0.2)",
                 borderWidth: 2,
                 tension: 0.35,
@@ -214,28 +247,76 @@
         options: {
             plugins: { legend: { display: false } },
             scales: {
-                x: { display: false },
-                y: { beginAtZero: true }
+                //Made x-axis values visible, time_values
+                x: { 
+                    display: true,
+                    type: 'category', 
+                }, 
+                y: { 
+                    display: true,
+                    beginAtZero: true }
+            },
+            animation: {
+                duration: 120,
             }
         }
     });
 
-    // Dummy live data
-    let t = 0;
-    setInterval(() => {
-        let flow = (Math.random() * 8).toFixed(2);
+    //Initialise the total usage
+    let totalUsed = 0.0;
+    const source = new EventSource("/stream"); 
 
-        document.getElementById("usageValue").textContent = "Flow Rate: " + flow + " L/min";
-        document.getElementById("totalValue").textContent =
-            "Total Used: " + (parseFloat(document.getElementById("totalValue").textContent.split(" ")[2]) + flow/10).toFixed(2) + " L";
+    source.onmessage = function(event) {
+        try {
+            //parse the JSON file
+            const data = JSON.parse(event.data); 
+            const newFlow = parseFloat(data.value); 
+            const date = new Date(data.timestamp * 1000); 
+            const timeLabel = date.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById("usageValue").textContent = `Flow Rate: ${newFlow.toFixed(2)} L/min`;
+            
+            // Rectangular integration using time.sleep() from Flask
+            totalUsed += newFlow * (1/60); 
+            document.getElementById("totalValue").textContent = `Total Used: ${totalUsed.toFixed(2)} L`;
 
-        document.getElementById("valveStatus").textContent = flow > 1 ? "Valve: OPEN" : "Valve: CLOSED";
+            // Update Valve Status
+            document.getElementById("valveStatus").textContent = newFlow > 0 ? "Valve: OPEN" : "Valve: CLOSED";
 
-        flowChart.data.labels.push(t++);
-        flowChart.data.datasets[0].data.push(flow);
-        flowChart.update();
+        
+            const chartData = flowChart.data.datasets[0].data;
+            const chartLabels = flowChart.data.labels;
+            
+            // Add new point and label
+            chartData.push(newFlow);
+            chartLabels.push(timeLabel); // Using time as the label
 
-    }, 1000);
+            // Limit data points for a scrolling effect
+            if (chartData.length > MAX_DATA_POINTS) {
+                chartData.shift(); 
+                chartLabels.shift(); 
+            }
+
+            // Redraw the chart
+            flowChart.update();
+
+        } catch (e) {
+            console.error("Error processing data or updating chart:", e);
+        }
+    };
+
+    source.onerror = function(error) {
+        console.error("EventSource failed:", error);
+        // Attempt to reconnect if the connection closes unexpectedly
+        source.close();
+        //reconnection messagge
+    };
+    
 </script>
+<footer>
+    <br>
+    <center>
+    <p>This page is developed by Smartopia &copy</p>
+    </center>
+</footer>
 </body>
 </html>

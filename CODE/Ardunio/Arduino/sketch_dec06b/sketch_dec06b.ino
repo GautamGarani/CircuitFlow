@@ -43,12 +43,12 @@ void loop()
     if (volume> FLOW_THRESHOLD && handdetectedHigh == LOW)
     { 
       tone(buzzerPin, 1000);
-      delay(5);
+      delay(1000);
     }
     else 
     {
       noTone(buzzerPin);
-      delay(5);
+      delay(1000);
     }
     if (handdetectedHigh == LOW)
     {

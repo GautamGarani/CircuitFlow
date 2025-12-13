@@ -8,24 +8,43 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+    /* Replicating styles from the Live Dashboard template */
     body {
         margin: 0;
         padding: 0;
-        background: linear-gradient(to bottom, #cce7ff, #e8f6ff);
+        /* Using a consistent background, perhaps plain white or a very light gradient */
+        background: white; 
         font-family: Arial, sans-serif;
     }
 
     .header {
-        background: #0a75c2;
-        padding: 18px;
+        position: sticky;
+        display: grid;
+        place-items: center;
         text-align: center;
-        color: white;
-        font-size: 24px;
+        top: 0;
+        /* Adjusting padding to be consistent with template */
+        padding: 12px 16px; 
+        background: #12a1de; /* Consistent blue */
+        color: #f5f5f5;
+        font: 18px Arial, sans-serif;
         font-weight: bold;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
     }
 
-    /* Grid: Left small block + Right large block */
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo {
+        height: 90px; 
+        width: auto;
+    }
+
+    /* 2-column layout (consistent with template) */
     .main-grid {
         display: grid;
         grid-template-columns: 260px auto;
@@ -35,39 +54,32 @@
         height: calc(100vh - 120px);
     }
 
+    /* Left column (consistent with template) */
     .left-col {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
+    /* Block styling (consistent with template) */
     .block-small {
         background: white;
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
-        height: 100%;
+        height: 100%; /* Make this fill the container height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Align content to the top */
         text-align: center;
+        transition: 0.3s;
     }
 
-    .block-small h3,
-    .block-large h3 {
-        color: #0a75c2;
-        margin-bottom: 10px;
-        font-size: 18px;
-        text-align: center;
+    .block-small:hover {
+        transform: scale(1.02); /* Slight hover effect */
     }
 
-    /* Calendar styling */
-    input[type="date"] {
-        padding: 10px;
-        width: 90%;
-        font-size: 16px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
-
-    /* Large block for graph */
+    /* Graph block (consistent with template) */
     .block-large {
         background: white;
         border-radius: 12px;
@@ -76,76 +88,191 @@
         height: 100%;
     }
 
+    .block-small h3, .block-large h3 {
+        color: #0a75c2; /* Consistent text color */
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    /* Calendar styling (Improved look) */
+    input[type="date"] {
+        padding: 10px;
+        width: 90%;
+        margin: 10px auto;
+        display: block;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 2px solid #12a1de; /* Consistent border color */
+        appearance: none; /* For better cross-browser consistency */
+        cursor: pointer;
+    }
+
+    /* Consistent button style */
+    .back-btn {
+        margin-top: auto; /* Pushes the button to the bottom of the block-small */
+        width: 80%;
+        padding: 12px;
+        background: #12a1de;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        display: block; /* Make it a block element to center with margin */
+        margin-left: auto;
+        margin-right: auto;
+        transition-duration: 0.5s;
+    }
+
+    .back-btn:hover {
+        background: #0a75c2; /* Slightly darker blue on hover */
+        transform: scale(1.05);
+    }
+
     canvas {
         width: 100% !important;
         height: 90% !important;
     }
 
-    .back-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background: #0a75c2;
-        color: white;
-        border-radius: 8px;
-        text-decoration: none;
-        font-size: 15px;
-        transition: 0.3s;
-        margin-top: 400px;
-    }
+    /* Media queries for responsiveness (consistent with template) */
+    @media (max-width: 768px) {
+        .main-grid {
+            grid-template-columns: 1fr; 
+            height: auto; 
+            width: 95%;
+        }
 
-    .back-btn:hover {
-        background: #004e8a;
+        .left-col {
+            height: auto;
+        }
+
+        .block-small {
+            height: auto;
+        }
+
+        .block-large {
+            height: 380px;
+        }
+
+        .logo {
+            height: 70px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
     }
 </style>
 </head>
 
 <body>
 
-<div class="header">CircuitFlow – Daily Report</div>
+<div class="header">
+    <div class="header-content">
+        <img class="logo" src="../static/circuitflow_logo.png">
+        <h2>Daily Report</h2>
+    </div>
+</div>
 
 <div class="main-grid">
 
-    <!-- LEFT COLUMN: Calendar -->
     <div class="left-col">
         <div class="block-small">
-            <h3>📅 Pick a Date</h3>
-            <input type="date" id="calendarPick">
+            <h3>📅 Date & Summary</h3>
+            
             <p style="margin-top:15px; font-size:16px;">
                 Select a day to view its detailed water usage.
             </p>
-            <a href="/" class="back-btn">⬅ Back</a>
+            <input type="date" id="calendarPick">
+            
+            <h4 style="color:#12a1de; margin-top: 30px;">Summary for <span id="selectedDate">Today</span></h4>
+            <p id="totalDailyUsage">Total Used: 25.5 L</p>
+            <p id="peakFlowTime">Peak Flow: 8:30 AM</p>
+            
+            <a href="/" class="back-btn">⬅ Go to Main Dashboard</a>
         </div>
     </div>
 
-    <!-- RIGHT COLUMN: Weekly Usage -->
     <div class="block-large">
-        <h3>📊 Weekly Water Usage</h3>
+        <h3>📊 Weekly Water Usage (Litres)</h3>
         <canvas id="weeklyChart"></canvas>
     </div>
 </div>
 
 <script>
-    // Dummy weekly values 
-    const weeklyData = [12, 20, 18, 25, 22, 15, 30];
+    // --- Chart.js Initialization ---
+    // Dummy weekly values (for a bar chart, total liters)
+    const weeklyData = [12, 20, 18, 25, 22, 15, 30]; 
+    const weeklyLabels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
     const ctx = document.getElementById('weeklyChart').getContext('2d');
     const weeklyChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+            labels: weeklyLabels,
             datasets: [{
                 label: "Litres Used",
                 data: weeklyData,
-                backgroundColor: "rgba(10,117,194,0.3)",
-                borderColor: "#0a75c2",
-                borderWidth: 2,
+                // Consistent color palette
+                backgroundColor: "rgba(18, 161, 222, 0.7)", 
+                borderColor: "#12a1de", 
+                borderWidth: 1.5,
+                borderRadius: 4, // Slightly rounded bars look modern
             }]
         },
         options: {
+            plugins: {
+                legend: { display: false },
+                title: { 
+                    display: true,
+                    text: 'Liters Used Per Day (Past 7 Days)',
+                    color: '#0a75c2'
+                }
+            },
             scales: {
-                y: { beginAtZero: true }
+                y: { 
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Liters (L)'
+                    }
+                }
             }
         }
+    });
+    
+    // --- Calendar Logic ---
+    const calendarPick = document.getElementById('calendarPick');
+    const totalDailyUsage = document.getElementById('totalDailyUsage');
+    const peakFlowTime = document.getElementById('peakFlowTime');
+    const selectedDate = document.getElementById('selectedDate');
+
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    calendarPick.value = today;
+
+    // Dummy data for daily report update based on selection
+    function updateDailyReport(dateString) {
+        // In a real application, you would use 'fetch' here to get data 
+        // from a server endpoint, e.g., `/api/daily-report?date=${dateString}`
+
+        // Dummy Logic: Total is based on the day of the week
+        const date = new Date(dateString);
+        const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday
+        const total = weeklyData[dayOfWeek === 0 ? 6 : dayOfWeek - 1] || 0; // Match day of week to data array
+
+        // Update the display elements
+        selectedDate.textContent = date.toLocaleDateString();
+        totalDailyUsage.textContent = `Total Used: ${total.toFixed(2)} L`;
+        peakFlowTime.textContent = total > 10 ? 'Peak Flow: 7:45 AM' : 'Peak Flow: N/A';
+    }
+
+    // Initial load and event listener
+    updateDailyReport(today);
+    calendarPick.addEventListener('change', (event) => {
+        updateDailyReport(event.target.value);
     });
 </script>
 
