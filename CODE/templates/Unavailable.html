@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
+<title>CircuitFlow - Error</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+    @keyframes shimmer{
+            100%{
+            mask-position: left;
+        }
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white; 
+        font-family: Arial, sans-serif;
+    }
+
+    .header {
+        position: sticky;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        top: 0;
+        padding: 12px 16px; 
+        background: #12a1de;
+        color: #f5f5f5;
+        font: 18px Arial, sans-serif;
+        font-weight: bold;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo {
+        height: 90px; 
+        width: auto;
+    }
+
+    .block-large {
+        background: white;
+        border-radius: 12px;
+        padding: 30px 20px;
+        box-shadow: 0px 4px 14px rgba(0,0,0,0.18);
+        text-align: center;
+        max-width: 500px;
+        margin: 40px auto;
+    }
+
+    .block-large h3 {
+        color: #0a75c2;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .block-large p {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        width: 80%;
+        padding: 12px;
+        background: #12a1de;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        transition-duration: 0.5s;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2.0s infinite;
+    }
+
+    .back-btn:hover {
+        background: #0a75c2;
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .logo {
+            height: 70px;
+        }
+        .block-large {
+            width: 90%;
+            padding: 20px;
+        }
+        h3 {
+            font-size: 18px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="header-content">
+        <img class="logo" src="../static/circuitflow_logo.png">
+        <h2>Unavailable</h2>
+    </div>
+</div>
+
+<div class="block-large">
+<h2>This page is unavailable till 8AM</h2>
+    <a href="/" class="back-btn" target="_blank">⬅ Go to Main Dashboard</a>
+</div>
+<footer>
+    <br>
+    <center>
+    <p>This page is developed by Smartopia &copy</p>
+    </center>
+</footer>
+</body>
+</html>

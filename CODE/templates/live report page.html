@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
-<title>CircuitFlow – Live Dashboard</title>
+<title>CircuitFlow – Live Monitoring</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -204,7 +204,7 @@
         <div class="block-small">
             <h3>&#128308; <span class="sp1">Live</span> Usage</h3>
             <p id="usageValue">Flow Rate: 0.0 L/min</p>
-            <p id="totalValue">Total Used: 0.0 L</p>
+            <!--<p id="totalValue">Total Used: 0.0 L</p>-->
             <p id="valveStatus">Valve Last Status: CLOSED</p>
         </div>
 
@@ -285,7 +285,7 @@
             //rectangular integration
             totalUsed += newFlow * (UPDATE_INTERVAL_SECONDS/60); 
             
-            document.getElementById("totalValue").textContent = `Total Used (approx): ${totalUsed.toFixed(4)} L`;
+            //document.getElementById("totalValue").textContent = `Total Used since last reload (approx): ${totalUsed.toFixed(4)} L`;
 
             // Comment out valve status if it fails when server STOPS.
             document.getElementById("valveStatus").textContent = newFlow > 0.01 ? "Valve Last Status: OPEN" : "Valve Last Status: CLOSED";

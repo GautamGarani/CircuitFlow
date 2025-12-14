@@ -120,27 +120,10 @@
 
 <div class="block-large">
     <h3>📈 Today's Water Usage Summary</h3>
-    <p>Total Water Used: <strong id="totalDailyUsage">25.5 L</strong></p>
-    <p>Peak Flow Time: <strong id="peakFlowTime">8:30 AM</strong></p>
-    <p>Average Flow Rate: <strong id="avgFlowRate">3.2 L/min</strong></p>
+    <p>Total volume used: <strong>{{total_volume}}</strong></p>
+    <p>Prediction for Tomorrow: <strong>{{prediction}}L</strong></p>
     <a href="/" class="back-btn" target="_blank">⬅ Go to Main Dashboard</a>
 </div>
 
-<script>
-    // Dummy dynamic update example
-    const totalDailyUsage = document.getElementById('totalDailyUsage');
-    const peakFlowTime = document.getElementById('peakFlowTime');
-    const avgFlowRate = document.getElementById('avgFlowRate');
-
-    // Example function to update the card
-    function updateUsage(total, peak, avg) {
-        totalDailyUsage.textContent = `${total.toFixed(2)} L`;
-        peakFlowTime.textContent = peak;
-        avgFlowRate.textContent = `${avg.toFixed(2)} L/min`;
-    }
-
-    // Example update (you can replace this with real data)
-    updateUsage(25.5, '8:30 AM', 3.2);
-</script>
 </body>
 </html>
