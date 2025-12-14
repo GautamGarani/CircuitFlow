@@ -205,7 +205,7 @@
             <h3>&#128308; <span class="sp1">Live</span> Usage</h3>
             <p id="usageValue">Flow Rate: 0.0 L/min</p>
             <p id="totalValue">Total Used: 0.0 L</p>
-            <p id="valveStatus">Valve: CLOSED</p>
+            <p id="valveStatus">Valve Last Status: CLOSED</p>
         </div>
 
         
@@ -282,16 +282,13 @@
             
             document.getElementById("usageValue").textContent = `Flow Rate: ${newFlow.toFixed(2)} L/min`;
             
-            // Rectangular integration using server's known time difference.
-            // Flow (L/min) * (0.4 seconds / 60 seconds/min)
-            
-            //CHANGE: Updated the time constant to use the new defined constant
+            //rectangular integration
             totalUsed += newFlow * (UPDATE_INTERVAL_SECONDS/60); 
             
-            document.getElementById("totalValue").textContent = `Total Used: ${totalUsed.toFixed(2)} L`;
+            document.getElementById("totalValue").textContent = `Total Used (approx): ${totalUsed.toFixed(4)} L`;
 
-            // Update Valve Status (using a small threshold > 0.01 to account for sensor noise)
-            document.getElementById("valveStatus").textContent = newFlow > 0.01 ? "Valve: OPEN" : "Valve: CLOSED";
+            // Comment out valve status if it fails when server STOPS.
+            document.getElementById("valveStatus").textContent = newFlow > 0.01 ? "Valve Last Status: OPEN" : "Valve Last Status: CLOSED";
 
             const chartData = flowChart.data.datasets[0].data;
             const chartLabels = flowChart.data.labels;

@@ -113,6 +113,7 @@
     button:hover{
         transform: scale(1.2);
     }
+
     button.disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -161,23 +162,21 @@
      }
 }
 
+    .pred{
+        font: Arial sans-serif 16px;
+}
+
 </style>
 </head>
-
-
-
 <body>
-
 <div class="header" id="myheader">
     <div class="header-content">
         <img src="../static/circuitflow_logo.png" class="logo">
         <h2>CircuitFlow</h2>
     </div>
 </div>
-
 <div class="mainContent">
 <center>
-
 <div class="mainContent">
     <h2>Dashboard</h2>
 <a href="/live" target="_blank">
@@ -187,19 +186,13 @@
 <h2 style="color:#292828;">
     📊 Usage Prediction For Today
 </h2>
-
-
-    <button id="predictionBtn">
+    <button id="predictionBtn" target="_blank">
         View Usage Prediction &rarr;
     </button>
-
-
-
-
 <br>
+<span id="predictionMessage" class="pred">
+</span>
 <h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>
-
-
 <a href="/analysis">
     <button>View Report &rarr;</button>
 </a>
@@ -210,32 +203,49 @@
 </footer>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // 1. Define all necessary elements first
     const button = document.getElementById("predictionBtn");
-
+    // ASSUMPTION: An element exists with this ID for status messages
+    const messageElement = document.getElementById("predictionMessage"); 
     function updatePredictionButton() {
         const hour = new Date().getHours();
 
-        console.log("Current hour:", hour); // DEBUG LINE
+        console.log("Current hour:", hour); 
 
-        // TEST CONDITION — CHANGE THIS TO VERIFY
-        const isActive = hour >= 10 || hour < 8;  
+        const isActive = hour >= 15|| hour < 8; 
 
         if (isActive) {
             button.disabled = false;
             button.classList.remove("disabled");
+            
+            // Set the navigation handler
             button.onclick = function () {
-                window.location.href = "/prediction";
+                window.location.href = "/analysis";
             };
+            
+            if (messageElement) {
+                messageElement.textContent = "";
+                messageElement.style.display = "none"; // Hide the message element
+                messageElement.classList.remove("status-not-available");
+            }
         } else {
             button.disabled = true;
             button.classList.add("disabled");
-            button.onclick = null; // HARD BLOCK
+            button.onclick = null; // HARD BLOCK by removing the handler
+            
+            if (messageElement) {
+                messageElement.textContent = "This button will open up at 8AM";
+                messageElement.style.display = "inline"; // Or "block"
+                messageElement.classList.add("status-not-available");
+            }
         }
+        
+
     }
 
+    // 2. Call the function once to set the initial state when the page loads
     updatePredictionButton();
 });
 </script>
-
 </body>
 </html>

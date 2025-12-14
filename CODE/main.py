@@ -1,8 +1,7 @@
 from flask import Flask, render_template, Response
 import time
 import json
-import random
-#Merged the two programs here --------------
+#-------------Merged the two programs here --------------
 import serial
 import threading
 import csv
@@ -62,7 +61,7 @@ app.config['SECRET_KEY'] = 'a_secure_and_random_string'
 
 @app.route("/")
 def home_page():
-    return render_template("mainpage.html")
+    return render_template("mainpage_2.html")
 
 @app.route("/live")
 def live_page():
@@ -91,13 +90,15 @@ def stream():
         }
     )
 
-'''@app.route("/analysis")
+@app.route("/analysis")
 def analysis_page():
-    return render_template("daily analysis page.html")'''
+    return render_template("daily analysis page.html")
 
 
 if __name__ == "__main__":
     thread = threading.Thread(target=read_arduino_data, daemon=True)
     thread.start()
+    print("Threder started!!")
     print("Starting the server...")
     app.run(host='0.0.0.0', port=8000, debug=False, use_reloader=False) 
+    
