@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CircuitFlow: Monitor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
+<style>
+        body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;    
+    }
+
+    .header{
+        position: sticky;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        top: 0;
+        padding: 12 16;
+        background: #12a1de;
+        color: black;
+        font: 18 Arial, sans-serif;
+        font-weight: bold;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        color: #f5f5f5;
+        z-index: 1000;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2.5s infinite;
+        opacity: 1;
+
+    }
+   .header-content {
+    	display: flex;
+    	align-items: center;
+    	gap: 10px;  /* spacing between logo and text 10px*/
+        opacity: 1;
+    }
+
+    .logo {
+    height: 90px;   
+    width: auto;
+    }
+
+    .mainContent{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+        min-height: 100vh;
+        margin-bottom: 0px;
+    }
+
+    form{
+        background: white;
+        padding: 25px 30px;
+        border-radius: 8px; 
+        border-color: black;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        width: 300px;
+    }
+
+    form h2{
+        margin-top: 0;
+        text-align: center;
+    }
+
+    input[type=text], input[type=number], input[type=file]{
+        width: 100%;
+        padding: 3px;
+        margin-top: 10px;
+        border-radius: 7px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    button{
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        background: #12a1de;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 80px;
+        display: inline-block;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 2.5s infinite;
+        transition-duration: 0.5s;
+    }
+
+    .button1{
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        background: red;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 80px;
+        display: inline-block;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+        animation: shimmer 1.0s infinite;
+        transition-duration: 1s;
+    }
+    
+    button:hover{
+        transform: scale(1.2);
+    }
+    button.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        animation: none;
+    }
+
+
+    @keyframes shimmer{
+        100%{
+            mask-position: left;
+        }
+    }
+
+    footer{
+    margin-top: -10px;   
+    padding: 10px;
+    font-size: 14px;
+    opacity: 0.7;
+    
+    }
+
+    .span1{
+        color: red;
+        font-weight: bold;
+    }
+
+    p{
+        font-size: 18px;
+    }
+
+    @keyframes button-hover {
+        0% {
+        color:#3399ff;
+        background-color:white;
+     }
+
+    50% {
+        color: white;
+        background-color: black;
+        border-color: black;
+    }
+    100% {
+        color:#3399ff;
+        background-color:white;
+     }
+}
+
+</style>
+</head>
+
+
+
+<body>
+
+<div class="header" id="myheader">
+    <div class="header-content">
+        <img src="../static/circuitflow_logo.png" class="logo">
+        <h2>CircuitFlow</h2>
+    </div>
+</div>
+
+<div class="mainContent">
+<center>
+
+<div class="mainContent">
+    <h2>Dashboard</h2>
+<a href="/live" target="_blank">
+    <button class="button1">Detailed Live Monitoring &#128246; &rarr;</button>
+</a>
+<br>
+<h2 style="color:#292828;">
+    📊 Usage Prediction For Today
+</h2>
+
+
+    <button id="predictionBtn">
+        View Usage Prediction &rarr;
+    </button>
+
+
+
+
+<br>
+<h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>
+
+
+<a href="/analysis">
+    <button>View Report &rarr;</button>
+</a>
+</div>
+</center> 
+<footer>
+    <p>This page is developed by Smartopia &copy</p>
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const button = document.getElementById("predictionBtn");
+
+    function updatePredictionButton() {
+        const hour = new Date().getHours();
+
+        console.log("Current hour:", hour); // DEBUG LINE
+
+        // TEST CONDITION — CHANGE THIS TO VERIFY
+        const isActive = hour >= 10 || hour < 8;  
+
+        if (isActive) {
+            button.disabled = false;
+            button.classList.remove("disabled");
+            button.onclick = function () {
+                window.location.href = "/prediction";
+            };
+        } else {
+            button.disabled = true;
+            button.classList.add("disabled");
+            button.onclick = null; // HARD BLOCK
+        }
+    }
+
+    updatePredictionButton();
+});
+</script>
+
+</body>
+</html>
