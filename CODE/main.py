@@ -20,7 +20,7 @@ import threading
 import csv
 
 #-------------INITIALISATION OF ARDUINO------------------
-SERIAL_PORT = 'COM3'
+SERIAL_PORT = 'COM4'
 BAUD_RATE = 9600
 
 #-------------INITIALISATION of live values--------------
@@ -64,8 +64,8 @@ def read_arduino_data():
 
                         
                         with data_lock:
-                            latest_value = new_value+1
-                            daily_total_volume += (new_value+1)* dt_min  
+                            latest_value = new_value
+                            daily_total_volume += (new_value)* dt_min  
 
                         print(f"Raw data: {line}, Latest value: {latest_value}, Total volume: {daily_total_volume:.2f}")
 
@@ -75,7 +75,7 @@ def read_arduino_data():
             
             current_time = datetime.datetime.now()
             
-            if current_time.hour == 15 and current_time.minute == 44:
+            if current_time.hour == 16 and current_time.minute == 9:
                 today_str = current_time.strftime("%Y-%m-%d")
                 if last_csv_write_date != today_str:  # Prevent multiple writes in the same minute
                     with data_lock:
