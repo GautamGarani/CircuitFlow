@@ -6,14 +6,15 @@ import datetime
 import numpy as np
 import schedule
 import statistics #for average, median, mode
+
 START_TIME= dtime(8, 0)
-END_TIME= dtime(22, 00)
+END_TIME= dtime(12, 00)
 
 def check_route_time():
     now=datetime.datetime.now().time()
-    return START_TIME<=now<=END_TIME
+    return (now>=END_TIME)or(now<=START_TIME)
 
-#-------------Merged the two programs here --------------
+#-------------Merged reader+main programs here --------------
 import serial
 import threading
 import csv
@@ -29,6 +30,7 @@ latest_prediction=0.0
 daily_total_volume=0.0
 
 #------------CONFIGURE THE THREADING---------------------
+
 data_lock = threading.Lock() 
 prediction_lock = threading.Lock()
 
@@ -73,7 +75,7 @@ def read_arduino_data():
             
             current_time = datetime.datetime.now()
             
-            if current_time.hour == 21 and current_time.minute == 40:
+            if current_time.hour == 15 and current_time.minute == 44:
                 today_str = current_time.strftime("%Y-%m-%d")
                 if last_csv_write_date != today_str:  # Prevent multiple writes in the same minute
                     with data_lock:
@@ -217,7 +219,7 @@ def run_daily_prediction():
         print(f"[{datetime.datetime.now()}] Daily prediction updated: {predicted_value:.2f}")
 
 def schedule_prediction():
-    schedule.every().day.at("21:45").do(run_daily_prediction)
+    schedule.every().day.at("19:00").do(run_daily_prediction)
     while True:
         schedule.run_pending()
         time.sleep(30)

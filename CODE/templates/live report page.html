@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
 <title>CircuitFlow – Live Monitoring</title>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
     body {
         margin: 0;
         padding: 0;
@@ -32,7 +32,6 @@
         z-index: 1000;
     }
 
-    
     .main-grid {
         display: grid;
         grid-template-columns: 260px auto;
@@ -42,7 +41,7 @@
         height: calc(100vh - 120px);
     }
 
-    /* Left column (two blocks) */
+    /*left box*/
     .left-col {
         display: flex;
         flex-direction: column;
@@ -76,7 +75,6 @@
         padding: 20px;
         box-shadow: 0px 4px 14px rgba(0,0,0,0.18);
         height: 100%;
-
     }
 
     .block-small h3, .block-large h3 {
@@ -98,9 +96,21 @@
         cursor: pointer;
         font-weight: 80px;
         display: inline-block;
+    }
+        .button2{
+        margin-top: 15px;
+        width: 40px;
+        padding: 12px;
+        background: purple;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 80px;
+        display: inline-block;
         mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
-        animation: shimmer 2.5s infinite;
-        transition-duration: 0.5s;
+
     }
 
     .button1{
@@ -135,7 +145,7 @@
    .header-content {
         display: flex;
         align-items: center;
-        gap: 10px;  
+        gap: 20px;  
     }
 
     .logo {
@@ -143,7 +153,7 @@
     width: auto;
     }
 
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
 
         .main-grid {
             grid-template-columns: 1fr;   
@@ -187,28 +197,21 @@
 </style>
 </head>
 <body>
-
 <div class="header">
     <div class="header-content">
         <img class="logo" src="../static/circuitflow_logo.png">
-        <h2><span class="sp1">Live Monitoring</span></h2>       
+        <h2><span class="sp1">Live Monitoring</span></h2> 
     </div>
 </div>
 
 <div class="main-grid">
-
-    
     <div class="left-col">
-
-        
         <div class="block-small">
             <h3>&#128308; <span class="sp1">Live</span> Usage</h3>
             <p id="usageValue">Flow Rate: 0.0 L/min</p>
             <!--<p id="totalValue">Total Used: 0.0 L</p>-->
             <p id="valveStatus">Valve Last Status: CLOSED</p>
         </div>
-
-        
         <div class="block-small">
             <h3>⬅ Back to Main Page</h3>
             <a href="/">
@@ -216,19 +219,15 @@
             <a href="/live">
                 <button class="button1">Reload &#10227;</button></a>
         </div>
-
     </div>
 
-    
     <div class="block-large">
         <h3>📈 <span class="sp1">Live</span> Flow Graph <span class="sp1">(LPM)</span></h3>
         <canvas id="flowChart"></canvas>
     </div>
-
 </div>
 
 <script>
-    
     const MAX_DATA_POINTS = 10; 
     
     //CHANGE: Define the update interval to match the server stream speed (0.4s).
@@ -320,10 +319,10 @@
     
 </script>
 <footer>
-    <br>
-    <center>
-    <p>This page is developed by Smartopia &copy</p>
-    </center>
+<br>
+<center>
+<p>This page is developed by Smartopia &copy</p>
+</center>
 </footer>
 </body>
 </html>

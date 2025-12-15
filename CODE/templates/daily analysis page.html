@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
-<title>CircuitFlow – Daily Report</title>
-
+<title>CircuitFlow - Daily Report</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
     @keyframes shimmer{
             100%{
             mask-position: left;
@@ -41,7 +39,7 @@
     .header-content {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
     }
 
     .logo {
@@ -106,11 +104,24 @@
             font-size: 18px;
         }
     }
+    .button2{
+        margin-top: 15px;
+        width: 50%;
+        padding: 12px;
+        background: purple;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 80px;
+        display: inline-block;
+        mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+
+    }
 </style>
 </head>
-
 <body>
-
 <div class="header">
     <div class="header-content">
         <img class="logo" src="../static/circuitflow_logo.png">
@@ -124,6 +135,5 @@
     <p>Prediction for Tomorrow: <strong>{{prediction}}L</strong></p>
     <a href="/" class="back-btn" target="_blank">⬅ Go to Main Dashboard</a>
 </div>
-
 </body>
 </html>

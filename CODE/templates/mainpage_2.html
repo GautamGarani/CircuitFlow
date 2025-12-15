@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../static/circuitflow_logo.png">
 <style>
-        body {
+    
+    body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
@@ -32,6 +33,7 @@
         opacity: 1;
 
     }
+
    .header-content {
     	display: flex;
     	align-items: center;
@@ -192,10 +194,12 @@
 <br>
 <span id="predictionMessage" class="pred">
 </span>
-<!--<h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>-->
+<h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>
 <a href="/overall-report">
-    <button>View Overall Report &rarr;</button>
+    <button id="predictionBtn">View Overall Report &rarr;</button>
 </a>
+<span id="predictionMessage" class="pred">
+</span>
 </div>
 </center> 
 <footer>
@@ -212,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log("Current hour:", hour); 
 
-        const isActive = hour >= 15|| hour < 8; 
+        const isActive = hour >= 12|| hour < 8; 
 
         if (isActive) {
             button.disabled = false;
@@ -234,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
             button.onclick = null; // HARD BLOCK by removing the handler
             
             if (messageElement) {
-                messageElement.textContent = "This button will open up at 8AM";
+                messageElement.textContent = "Coming Soon...This button will open up at 8AM";
                 messageElement.style.display = "inline"; // Or "block"
                 messageElement.classList.add("status-not-available");
             }
