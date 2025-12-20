@@ -42,6 +42,7 @@ Flask Web Application
      <br>
 Live Dashboard & Reports
 </p>
+
 ## Machine Learning Module
 * Uses the last four days of water usage as input
 * Predicts next day water consumption
