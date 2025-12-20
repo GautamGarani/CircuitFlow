@@ -1,73 +1,83 @@
 # CircuitFLow
-A brief description of 'CicuitFLow: Smart Water Management, drop by drop', and how to use this repository.
+💧 Water Flow Monitoring and Prediction System
+<br>
+A real-time water usage monitoring and prediction system built using Arduino, Flask, and a custom neural network. The application collects live sensor data, tracks daily consumption, predicts future water usage, and presents insights through an interactive web dashboard.
 
-## Installation:
-```bash
-git clone https://github.com/your-username/CircuitFlow.git
-cd CircuitFlow
-```
-## Using this repository:
-This repository shall contain relevant project documents pertaining to 'CircuitFLow' such as:
-    (a) Design Document for hardware and software
-    <br>
-    (b) Project Plan
-    <br>
-    (c) Project Architecture
-    <br>
-    (d) Project Code
-    <br>
+## 📌 Features
+🔌 Real-time Arduino sensor integration
+<br>
+📈 Live water flow monitoring
+<br>
+🧮 Automatic daily water consumption calculation
+<br>
+🧠 Neural network–based water usage prediction
+<br>
+⏰ Scheduled daily analysis and prediction
+<br>
+🌐 Web-based dashboard using Flask
+<br>
+📊 Statistical analysis (average, median, mode)
+<br>
+🔄 Server-Sent Events (SSE) for live updates
 
-## Contributing to this repository:
-### README.md files:
-Option 1: Use the GitHub website, and create new files. Upload the file with a commit message.<br>
+## 🏗️ System Overview
+The system continuously reads water flow data from an Arduino sensor via serial communication. This data is processed to calculate real-time flow values and cumulative daily usage. At the end of each day, the total water consumption is stored and later used to train a neural network that predicts future usage patterns.
 
-Option 2: Use Git on your computer
-<br>
-Place the file in the local repo folder.
-<br>
-Open Git Bash and run:
-```bash
-git add README.md
-git commit -m "Commit message"
-git push origin branch-name
-```
-### Modifying the repository
-After commiting changes locally, 
-<br>
-1: To pull from the repository:
-```bash
-git pull origin branch-name
-```
-2: To push to the repository:
-```bash
-git push origin branch-name
-```
-Go to the original repo and click "Compare & pull request".
-<br>
-Fill in a clear title and description of your changes, if they are major.
+All data and analysis results are visualized using a Flask-based web application.
 
-3: To create a branch:
-```bash
-git branch branch-name
-```
-4: To switch to a branch:
-```bash
-git branch
-git checkout branch-name
-git switch branch-name
-```
+## 🧩 Project Architecture
+Arduino Sensor
+     ↓
+Serial Communication
+     ↓
+Data Processing & Storage (CSV)
+     ↓
+Neural Network Prediction
+     ↓
+Flask Web Application
+     ↓
+Live Dashboard & Reports
 
-5: To create a branch and switch to it:
-```bash
-git checkout -b branch-name
-```
+## 🧠 Machine Learning Module
+Uses the last four days of water usage as input
+Predicts next day water consumption
+Includes:
+Data normalization
+<br>
+Forward propagation
+<br>
+Backpropagation
+<br>
+Mean Squared Error loss
+<br>
+Predictions are generated automatically once per day and stored for future reference.
 
-## Guidelines for contribution:
-1: Read the README, which explains the project's purpose.
+## ⏱️ Scheduled Operations
+| Task                        | Time     |
+| --------------------------- | -------- |
+| Daily start time            | 8:00 AM  |
+| Daily water usage logging   | 10:00 AM |
+| Daily prediction generation | 10:00 AM |
+
+The scheduled tasks are exectued automatically.
+
+## 🛠️ Technologies Used
+Python
 <br>
-2: Clone the repository locally.
+Flask
 <br>
-3: Create new branches wherever required, avoid directly working with 'main'.
+NumPy
 <br>
-4: Keep commits focussed and atomic.
+Arduino
+<br>
+Serial Communication
+<br>
+Chart.js (frontend visualization)
+<br>
+Server-Sent Events (SSE)
+
+## 🤝 Contributors
+
+
+
 
