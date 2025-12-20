@@ -19,6 +19,7 @@ The system continuously reads water flow data from an Arduino sensor via serial 
 All data and analysis results are visualized using a Flask-based web application.
 
 ## Project Architecture
+<p align="center">
 Arduino Sensor
 <br>
      ↓
@@ -40,7 +41,7 @@ Flask Web Application
      ↓
      <br>
 Live Dashboard & Reports
-
+</p>
 ## Machine Learning Module
 * Uses the last four days of water usage as input
 * Predicts next day water consumption
