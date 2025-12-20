@@ -68,7 +68,8 @@ The scheduled tasks are exectued automatically.
 | https://github.com/BlackCatDisha
 * Ashi Chauhan | Embedded System Manager | Embedded Systems and Assembly
  | https://github.com/AshiChauhan1006
-* Suhas V J | 
+* Suhas V J | Hardware Manager | Hardware Management & Assembly | https://github.com/suhas1307-beep
+
 
 
 
