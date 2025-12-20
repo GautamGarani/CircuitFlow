@@ -74,13 +74,13 @@ The scheduled tasks are exectued automatically.
 * Server-Sent Events (SSE)
 
 ## 🤝 Contributors
-* Gautam Garani | Data Analyst and Networking| Data Analytics, P2P networking, Android
+* **Gautam Garani** | Data Analyst and Networking| Data Analytics, P2P networking, Android
 | https://github.com/GautamGarani
-* Disha G N | Data Analyst & Design| Data analytics & U/I design
+* **Disha G N** | Data Analyst & Design| Data analytics & U/I design
 | https://github.com/BlackCatDisha
-* Ashi Chauhan | Embedded System Manager | Embedded Systems and Assembly
+* **Ashi Chauhan** | Embedded System Manager | Embedded Systems and Assembly
  | https://github.com/AshiChauhan1006
-* Suhas V J | Hardware Manager | Hardware Management & Assembly | https://github.com/suhas1307-beep
+* **Suhas V J** | Hardware Manager | Hardware Management & Assembly | https://github.com/suhas1307-beep
 
 
 
