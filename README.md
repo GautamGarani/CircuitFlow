@@ -62,9 +62,9 @@ The scheduled tasks are exectued automatically.
 * Server-Sent Events (SSE)
 
 ## 🤝 Contributors
-Gautam Garani | @GautamGarani
-Disha G N | @BlackCatDisha
-Ashi Chauhan | @AshiChauhan1006
+Gautam Garani | https://github.com/GautamGarani
+Disha G N | https://github.com/BlackCatDisha
+Ashi Chauhan | https://github.com/AshiChauhan1006
 
 
 
