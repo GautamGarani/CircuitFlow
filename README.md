@@ -20,15 +20,25 @@ All data and analysis results are visualized using a Flask-based web application
 
 ## Project Architecture
 Arduino Sensor
+<br>
      ↓
+     <br>
 Serial Communication
+<br>
      ↓
+     <br>
 Data Processing & Storage (CSV)
+<br>
      ↓
+     <br>
 Neural Network Prediction
+<br>
      ↓
+     <br>
 Flask Web Application
+<br>
      ↓
+     <br>
 Live Dashboard & Reports
 
 ## Machine Learning Module
