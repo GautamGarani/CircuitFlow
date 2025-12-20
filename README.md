@@ -1,4 +1,7 @@
-# CircuitFLow
+# CircuitFlow
+<p align="center">
+<img src="static/circuitflow_logo.png" width=300 height=100>
+</p>
 💧 Water Flow Monitoring and Prediction System
 <br>
 A real-time water usage monitoring and prediction system built using Arduino, Flask, and a custom neural network. The application collects live sensor data, tracks daily consumption, predicts future water usage, and presents insights through an interactive web dashboard.
