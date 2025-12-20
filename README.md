@@ -1,6 +1,6 @@
 # CircuitFlow
 <p align="center">
-<img src="CODE/static/circuitflow_logo.png" width=300 height=400>
+<img src="CODE/static/circuitflow_logo.png" width=150 height=300>
 </p>
 💧 Water Flow Monitoring and Prediction System
 <br>
