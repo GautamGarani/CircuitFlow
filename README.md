@@ -48,6 +48,7 @@ Live Dashboard & Reports
 * Predicts next day water consumption
 <br>
 Includes:
+
 * Data normalization
 * Forward propagation
 * Backpropagation
