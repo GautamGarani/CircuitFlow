@@ -46,6 +46,10 @@ Flask Web Application
 Live Dashboard & Reports
 </p>
 
+<p align="center">
+<img src="/Images/CircuitFlow_FlowDiagram.png" width=150 height=300>
+</p>
+
 ## Machine Learning Module
 * Uses the last four days of water usage as input
 * Predicts next day water consumption
