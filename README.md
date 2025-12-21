@@ -47,7 +47,7 @@ Live Dashboard & Reports
 </p>
 
 <p align="center">
-<img src="/Images/CircuitFlow_FlowDiagram.png" width=500 height=700>
+<img src="/Images/CircuitFlow_FlowDiagram.png" width=700 height=1000>
 </p>
 
 ## Machine Learning Module
