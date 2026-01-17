@@ -85,7 +85,7 @@ The scheduled tasks are exectued automatically.
 * **Gautam Garani** | Data Analyst and Networking| Data Analytics, P2P networking, Android
 | https://github.com/GautamGarani
 * **Disha G N** | Data Analyst and Design | https://github.com/BlackCatDisha
-* **Ashi Chauhan** | Embedded Systems | https://AshiChauhan1007
+* **Ashi Chauhan** | Embedded Systems | https://github.com/AshiChauhan1007
 * **Suhas V J** | Hardware and Embedded Systems | https://github.com/suhas1307-beep
 
 
