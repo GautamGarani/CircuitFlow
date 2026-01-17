@@ -174,27 +174,26 @@
 <div class="header" id="myheader">
     <div class="header-content">
         <img src="../static/circuitflow_logo.png" class="logo">
-        <h2>CircuitFlow</h2>
+        <h2>Dashboard</h2>
     </div>
 </div>
 <div class="mainContent">
 <center>
 <div class="mainContent">
-    <h2>Dashboard</h2>
 <a href="/live" target="_blank">
     <button class="button1">Detailed Live Monitoring &#128246; &rarr;</button>
 </a>
 <br>
-<h2 style="color:#292828;">
-    📊 Usage Prediction For Today
-</h2>
+<h3 style="color:#292828;">
+    📊 Usage Prediction & Report
+</h3>
     <button id="predictionBtn" target="_blank">
         View Daily Report and Prediction &rarr;
     </button>
 <br>
 <span id="predictionMessage" class="pred">
 </span>
-<h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>
+<!--<h2 style="color:#6e6e6e">&#128167Coming soon!...</h2>-->
 <a href="/overall-report">
     <button id="predictionBtn">View Overall Report &rarr;</button>
 </a>
@@ -216,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log("Current hour:", hour); 
 
-        const isActive = hour >= 12|| hour < 8; 
+        const isActive = hour >= 8|| hour < 13; 
 
         if (isActive) {
             button.disabled = false;
