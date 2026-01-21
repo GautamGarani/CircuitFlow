@@ -17,7 +17,7 @@ A real-time water usage monitoring and prediction system built using Arduino, Fl
 * Server-Sent Events (SSE) for live updates
 
 ## 🏗️ System Overview
-The system continuously reads water flow data from an Arduino sensor via serial communication. This data is processed to calculate real-time flow values and cumulative daily usage. At the end of each day, the total water consumption is stored and later used to train a neural network that predicts future usage patterns.
+The system continuously reads water flow data from an Arduino sensor via serial communication. This data is processed to calculate real-time flow values and cumulative daily usage. At the end of each day, the total water consumption is stored and later used to train a prediction model that predicts future usage patterns.
 
 All data and analysis results are visualized using a Flask-based web application.
 
