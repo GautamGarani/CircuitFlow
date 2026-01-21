@@ -35,7 +35,7 @@ Data Processing & Storage (CSV)
 <br>
      ↓
      <br>
-Neural Network Prediction
+Prediction
 <br>
      ↓
      <br>
@@ -53,14 +53,7 @@ Live Dashboard & Reports
 ## Machine Learning Module
 * Uses the last four days of water usage as input
 * Predicts next day water consumption
-<br>
-Includes:
 
-* Data normalization
-* Forward propagation
-* Backpropagation
-* Mean Squared Error loss
-<br>
 Predictions are generated automatically once per day and stored for future reference.
 
 ## ⏱️ Scheduled Operations
