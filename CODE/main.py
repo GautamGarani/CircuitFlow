@@ -10,6 +10,8 @@ import serial
 import threading
 import csv
 from datetime import date
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.preprocessing import StandardScaler
 
 START_TIME = dtime(8, 0)
 END_TIME = dtime(10, 0)
@@ -60,13 +62,13 @@ def read_arduino_data():
                         pass
 
             current_time = datetime.datetime.now()
-            if current_time.hour == 18 and current_time.minute == 19:
+            if current_time.hour == 10 and current_time.minute == 00:
                 today_str = current_time.strftime("%Y-%m-%d")
                 if last_csv_write_date != today_str:
                     with data_lock:
                         total_volume_today = daily_total_volume
 
-                    with open("flow_data_old.csv", "a", newline="") as f:
+                    with open("flow_data.csv", "a", newline="") as f:
                         writer = csv.DictWriter(
                             f, fieldnames=["Date", "Flow"]
                         )
@@ -74,7 +76,7 @@ def read_arduino_data():
                             writer.writeheader()
                         writer.writerow({
                             "Date": today_str,
-                            "Flow": total_volume_today
+                            "Flow": f"{total_volume_today:.4f}"
                         })
 
                     last_csv_write_date = today_str
@@ -85,86 +87,86 @@ def read_arduino_data():
         if ser and ser.is_open:
             ser.close()
 
-# ---------------- NEURAL NETWORK LOGIC ---------------------
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+# ---------------- GRADIENT BOOSTING ---------------------
 
-def sigmoid_deriv(x):
-    s = sigmoid(x)
-    return s * (1 - s)
+def monsoon_strength(month):
+    #Monsoon encoding using IMD data
+    if month == 6: return 0.5
+    elif month in [7, 8]: return 1.0
+    elif month == 9: return 0.7
+    else: return 0.0
 
-def prepare_training_data_4_input(flows):
+def prepare_training_data_4_input_seasonal(flows, dates):
+    # Logarithmic transformation 
+    # np.log1p for handling case where zero comes
+    log_flows = np.log1p(flows)
+    
     X, y = [], []
-    for i in range(len(flows) - 4):
-        X.append([flows[i], flows[i+1], flows[i+2], flows[i+3]])
-        y.append([flows[i+4]])
+    for i in range(len(log_flows) - 4):
+        date_obj = dates[i + 4]
+        doy = date_obj.timetuple().tm_yday
+        month = date_obj.month
+
+        # Cyclical encoding
+        sin_doy = np.sin(2 * np.pi * doy / 365)
+        cos_doy = np.cos(2 * np.pi * doy / 365)
+        monsoon = monsoon_strength(month)
+
+        X.append([
+            log_flows[i], log_flows[i+1], log_flows[i+2], log_flows[i+3],
+            sin_doy, cos_doy, monsoon
+        ])
+        y.append(log_flows[i+4]) # Target is also in log space
     return np.array(X, float), np.array(y, float)
 
-class NeuralNetwork:
-    def __init__(self):
-        self.W1 = np.random.normal(0,1,(4,16))
-        self.b1 = np.random.normal(0,1,(16,))
-        self.W2 = np.random.normal(0,1,(16,8))
-        self.b2 = np.random.normal(0,1,(8,))
-        self.W3 = np.random.normal(0,1,(8,1))
-        self.b3 = np.random.normal(0,1,(1,))
-
-    def fit_scaler(self, X, y):
-        self.X_mean = X.mean(axis=0)
-        self.X_std = np.where(X.std(axis=0)==0,1,X.std(axis=0))
-        self.y_mean = y.mean()
-        self.y_std = y.std() if y.std()!=0 else 1
-        return (X-self.X_mean)/self.X_std, (y-self.y_mean)/self.y_std
-
-    def feedforward(self, X):
-        self.z1 = X @ self.W1 + self.b1
-        self.h1 = sigmoid(self.z1)
-        self.z2 = self.h1 @ self.W2 + self.b2
-        self.h2 = sigmoid(self.z2)
-        self.z3 = self.h2 @ self.W3 + self.b3
-        return sigmoid(self.z3)
-
-    def train(self, X, y, lr=0.05, epochs=4000):
-        Xn, yn = self.fit_scaler(X, y)
-        for _ in range(epochs):
-            out = self.feedforward(Xn)
-            d = 2*(out-yn) * sigmoid_deriv(self.z3)
-            self.W3 -= lr * self.h2.T @ d
-            self.b3 -= lr * d.sum(axis=0)
-
-    def predict_denormalized(self, sample):
-        sn = (sample - self.X_mean)/self.X_std
-        pred = self.feedforward(sn)
-        return pred*self.y_std + self.y_mean
-
-def run_deep_flow_prediction(file_name="flow_data_old.csv"):
+def run_deep_flow_prediction(file_name="flow_data.csv"):
     flows = []
+    dates = []
+    
     with open(file_name, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            flows.append(float(row["Flow"]))
+            flows.append(float(row.get(" Flow") or row.get("Flow")))
+            dates.append(datetime.datetime.strptime(row["Date"], "%Y-%m-%d").date())
 
     flows = np.array(flows, float)
+    X, y = prepare_training_data_4_input_seasonal(flows, dates)
 
-   
-    X, y = prepare_training_data_4_input(flows)
-
-    #TIME SERIES SPLIT
     n = len(X)
     train_end = int(0.7 * n)
-    val_end = int(0.85 * n)
-
     X_train, y_train = X[:train_end], y[:train_end]
-    X_val, y_val = X[train_end:val_end], y[train_end:val_end]
-    X_test, y_test = X[val_end:], y[val_end:]
 
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+
+    model = GradientBoostingRegressor(
+        n_estimators=300,
+        learning_rate=0.05,
+        max_depth=3,
+        random_state=42
+    )
+    model.fit(X_train_scaled, y_train)
+
+    last_date = dates[-1]
+    doy = last_date.timetuple().tm_yday
     
-    nn = NeuralNetwork()
-    nn.train(X_train, y_train)
+    last_4_flows_log = np.log1p([flows[-4], flows[-3], flows[-2], flows[-1]])
+    
+    last_input = np.array([[
+        last_4_flows_log[0], last_4_flows_log[1], 
+        last_4_flows_log[2], last_4_flows_log[3],
+        np.sin(2 * np.pi * doy / 365),
+        np.cos(2 * np.pi * doy / 365),
+        monsoon_strength(last_date.month)
+    ]], float)
 
-    # Predict next day
-    last_four = np.array([[flows[-4], flows[-3], flows[-2], flows[-1]]], float)
-    return nn.predict_denormalized(last_four)[0][0]
+    last_input_scaled = scaler.transform(last_input)
+    
+    log_prediction = model.predict(last_input_scaled)[0]
+    
+    # Inverse transform to bring it back from log
+    prediction = np.expm1(log_prediction)
+    return prediction
 
 # ---------------- DAILY PREDICTION ------------------------
 def run_daily_prediction():
@@ -186,7 +188,7 @@ def run_daily_prediction():
         })
 
 def schedule_prediction():
-    schedule.every().day.at("15:25").do(run_daily_prediction)
+    schedule.every().day.at("10:01").do(run_daily_prediction)
     while True:
         schedule.run_pending()
         time.sleep(30)
